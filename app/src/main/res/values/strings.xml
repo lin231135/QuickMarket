@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">QuickMarket</string>
+    <string name="menu">menu</string>
+    <string name="carrito">carrito</string>
+    <string name="quick_market">Quick Market</string>
+    <string name="configuracion">configuracion</string>
+    <string name="mi_cuenta">Mi Cuenta</string>
+    <string name="perfil">perfil</string>
+    <string name="icono">icono</string>
+    <string name="perfil2">perfil2</string>
+    <string name="perfil_y_contrase_a">Perfil y contraseña</string>
+    <string name="pedido">pedido</string>
+    <string name="pedidos">Pedidos</string>
+    <string name="valoraciones">valoraciones</string>
+    <string name="mis_valoraciones">Mis valoraciones</string>
+    <string name="envio">envio</string>
+    <string name="direcciones_de_envio">Direcciones de envío</string>
+    <string name="tarjetas">tarjetas</string>
+    <string name="tarjetas_guardadas">Tarjetas guardadas</string>
+    <string name="notificacion">notificacion</string>
+    <string name="notificaciones">Notificaciones</string>
 </resources>

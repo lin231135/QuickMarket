@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,7 +44,7 @@ fun SettingsScreen(onLogoutClick: () -> Unit) {
                         Icon(
                             imageVector = Icons.Filled.Menu,
                             tint = Color(0xFF78b395),
-                            contentDescription = "menu"
+                            contentDescription = stringResource(R.string.menu)
                         )
                     }
                     Spacer(modifier = Modifier.width(16.dp))
@@ -55,14 +56,14 @@ fun SettingsScreen(onLogoutClick: () -> Unit) {
                     ) {
                         Image(
                             painter = painterResource(id = R.drawable.carrito),
-                            contentDescription = "carrito",
+                            contentDescription = stringResource(R.string.carrito),
                             modifier = Modifier
                                 .size(30.dp)
                                 .background(Color(0xFFc9e5d7))
                         )
 
                         Text(
-                            text = "Quick Market",
+                            text = stringResource(R.string.quick_market),
                             color = Color(0xFF008243),
                             modifier = Modifier.padding(start = 8.dp),
                             fontWeight = FontWeight.ExtraBold,
@@ -78,7 +79,7 @@ fun SettingsScreen(onLogoutClick: () -> Unit) {
                         Icon(
                             imageVector = Icons.Filled.Settings,
                             tint = Color(0xFF78b395),
-                            contentDescription = "configuracion"
+                            contentDescription = stringResource(R.string.configuracion)
                         )
                     }
                 }
@@ -91,7 +92,7 @@ fun SettingsScreen(onLogoutClick: () -> Unit) {
                     verticalAlignment = Alignment.Bottom
                 ) {
                     Text(
-                        text = "Mi Cuenta",
+                        text = stringResource(R.string.mi_cuenta),
                         color = Color(0xFF008243),
                         modifier = Modifier.padding(bottom = 8.dp),
                         fontWeight = FontWeight.ExtraBold,
@@ -120,12 +121,12 @@ fun cuenta() {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.perfil),
-                contentDescription = "perfil",
+                contentDescription = stringResource(R.string.perfil),
                 modifier = Modifier
             )
             Icon(
                 imageVector = Icons.Filled.Add,
-                contentDescription = "icono",
+                contentDescription = stringResource(R.string.icono),
                 tint = Color.White,
                 modifier = Modifier
                     .size(50.dp)
@@ -149,7 +150,7 @@ fun cuenta() {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.perfil2),
-                contentDescription = "perfil2",
+                contentDescription = stringResource(R.string.perfil2),
                 modifier = Modifier
                     .size(40.dp)
             )
@@ -157,7 +158,7 @@ fun cuenta() {
             Spacer(modifier = Modifier.width(2.dp))
 
             Text(
-                text = "Perfil y contraseña",
+                text = stringResource(R.string.perfil_y_contrase_a),
                 color = Color.Black,
                 fontSize = 15.sp
             )
@@ -179,7 +180,7 @@ fun cuenta() {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.pedido),
-                contentDescription = "pedido",
+                contentDescription = stringResource(R.string.pedido),
                 modifier = Modifier
                     .size(40.dp)
             )
@@ -187,7 +188,7 @@ fun cuenta() {
             Spacer(modifier = Modifier.width(2.dp))
 
             Text(
-                text = "Pedidos",
+                text = stringResource(R.string.pedidos),
                 color = Color.Black,
                 fontSize = 15.sp
             )
@@ -209,7 +210,7 @@ fun cuenta() {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.valoraciones),
-                contentDescription = "valoraciones",
+                contentDescription = stringResource(R.string.valoraciones),
                 modifier = Modifier
                     .size(40.dp)
             )
@@ -217,7 +218,7 @@ fun cuenta() {
             Spacer(modifier = Modifier.width(2.dp))
 
             Text(
-                text = "Mis valoraciones",
+                text = stringResource(R.string.mis_valoraciones),
                 color = Color.Black,
                 fontSize = 15.sp
             )
@@ -238,7 +239,7 @@ fun cuenta() {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.envio),
-                contentDescription = "envio",
+                contentDescription = stringResource(R.string.envio),
                 modifier = Modifier
                     .size(40.dp)
             )
@@ -246,7 +247,7 @@ fun cuenta() {
             Spacer(modifier = Modifier.width(2.dp))
 
             Text(
-                text = "Direcciones de envío",
+                text = stringResource(R.string.direcciones_de_envio),
                 color = Color.Black,
                 fontSize = 15.sp
             )
@@ -267,7 +268,7 @@ fun cuenta() {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.tarjetas),
-                contentDescription = "tarjetas",
+                contentDescription = stringResource(R.string.tarjetas),
                 modifier = Modifier
                     .size(40.dp)
             )
@@ -275,7 +276,7 @@ fun cuenta() {
             Spacer(modifier = Modifier.width(2.dp))
 
             Text(
-                text = "Tarjetas guardadas",
+                text = stringResource(R.string.tarjetas_guardadas),
                 color = Color.Black,
                 fontSize = 15.sp
             )
@@ -297,7 +298,7 @@ fun cuenta() {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.notificacion),
-                contentDescription = "notificacion",
+                contentDescription = stringResource(R.string.notificacion),
                 modifier = Modifier
                     .size(40.dp)
             )
@@ -305,7 +306,7 @@ fun cuenta() {
             Spacer(modifier = Modifier.width(2.dp))
 
             Text(
-                text = "Notificaciones",
+                text = stringResource(R.string.notificaciones),
                 color = Color.Black,
                 fontSize = 15.sp
             )
