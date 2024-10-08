@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -59,14 +60,14 @@ fun SearchAndSortBar() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp),
-            label = { Text("Busca tu producto...") },
+            label = { Text(stringResource(R.string.busca_tu_producto)) },
             singleLine = true,
             shape = RoundedCornerShape(16.dp),
             trailingIcon = {
                 IconButton(onClick = { /**/ }) {
                     Icon(
                         painter = painterResource(id = R.drawable.lupa),
-                        contentDescription = "Buscar",
+                        contentDescription = stringResource(R.string.buscar),
                         tint = Color(0xFF008243)
                     )
                 }
@@ -83,7 +84,7 @@ fun SearchAndSortBar() {
                 colors = ButtonDefaults.buttonColors(Color(0xFF008243)),
                 modifier = Modifier.height(35.dp)
             ) {
-                Text("Ordenar")
+                Text(stringResource(R.string.ordenar))
             }
             Spacer(modifier = Modifier.width(10.dp))
             Button(
@@ -91,7 +92,7 @@ fun SearchAndSortBar() {
                 colors = ButtonDefaults.buttonColors(Color(0xFF008243)),
                 modifier = Modifier.height(35.dp)
             ) {
-                Text("Filtrar")
+                Text(stringResource(R.string.filtrar))
             }
         }
     }
@@ -109,7 +110,7 @@ fun BookItem(book: Book, onItemClick: (Book) -> Unit) {
         Row(modifier = Modifier.padding(8.dp)) {
             Image(
                 painter = painterResource(id = book.image),
-                contentDescription = "Book Image",
+                contentDescription = stringResource(R.string.book_image),
                 modifier = Modifier
                     .size(100.dp)
                     .padding(end = 8.dp)
@@ -133,14 +134,14 @@ fun RatingBar(rating: Float) {
         repeat(rating.toInt()) {
             Icon(
                 imageVector = Icons.Rounded.Star,
-                contentDescription = "Filled star",
+                contentDescription = stringResource(R.string.filled_star),
                 modifier = Modifier.padding(end = 4.dp)
             )
         }
         repeat(5 - rating.toInt()) {
             Icon(
                 imageVector = Icons.Rounded.Star,
-                contentDescription = "Empty star",
+                contentDescription = stringResource(R.string.empty_star),
                 modifier = Modifier.padding(end = 4.dp)
             )
         }
@@ -183,7 +184,7 @@ fun Encabezado(onLogoutClick: () -> Unit, modifier: Modifier = Modifier.backgrou
                 Icon(
                     imageVector = Icons.Filled.Menu,
                     tint = Color(0xFF78b395),
-                    contentDescription = "menu"
+                    contentDescription = stringResource(R.string.menu)
                 )
             }
             Spacer(modifier = Modifier.width(16.dp))
@@ -195,7 +196,7 @@ fun Encabezado(onLogoutClick: () -> Unit, modifier: Modifier = Modifier.backgrou
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.carrito),
-                    contentDescription = "carrito",
+                    contentDescription = stringResource(R.string.carrito),
                     modifier = Modifier
                         .size(30.dp)
                         .background(Color(0xFFc9e5d7))
@@ -218,7 +219,7 @@ fun Encabezado(onLogoutClick: () -> Unit, modifier: Modifier = Modifier.backgrou
                 Icon(
                     imageVector = Icons.Filled.Settings,
                     tint = Color(0xFF78b395),
-                    contentDescription = "configuracion"
+                    contentDescription = stringResource(R.string.configuracion)
                 )
             }
         }

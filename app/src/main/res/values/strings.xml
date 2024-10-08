@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">QuickMarket</string>
+    <string name="busca_tu_producto">Busca tu producto...</string>
+    <string name="buscar">Buscar</string>
+    <string name="ordenar">Ordenar</string>
+    <string name="filtrar">Filtrar</string>
+    <string name="carrito">carrito</string>
+    <string name="configuracion">configuracion</string>
+    <string name="menu">menu</string>
+    <string name="filled_star">Filled star</string>
+    <string name="empty_star">Empty star</string>
+    <string name="book_image">Book Image</string>
 </resources>
