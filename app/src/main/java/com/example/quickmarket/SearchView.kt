@@ -65,7 +65,7 @@ fun SearchAndSortBar() {
             trailingIcon = {
                 IconButton(onClick = { /**/ }) {
                     Icon(
-                        painter = painterResource(id = R.drawable.lupa),
+                        painter = painterResource(id = R.drawable.lupa), // Asegúrate de que este recurso exista
                         contentDescription = "Buscar",
                         tint = Color(0xFF008243)
                     )
@@ -108,7 +108,7 @@ fun BookItem(book: Book, onItemClick: (Book) -> Unit) {
     ) {
         Row(modifier = Modifier.padding(8.dp)) {
             Image(
-                painter = painterResource(id = book.image),
+                painter = painterResource(id = book.image), // Asegúrate de que este recurso exista
                 contentDescription = "Book Image",
                 modifier = Modifier
                     .size(100.dp)
@@ -194,7 +194,7 @@ fun Encabezado(onLogoutClick: () -> Unit, modifier: Modifier = Modifier.backgrou
                 modifier = Modifier.weight(1f)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.carrito),
+                    painter = painterResource(id = R.drawable.carrito), // Asegúrate de que este recurso exista
                     contentDescription = "carrito",
                     modifier = Modifier
                         .size(30.dp)
