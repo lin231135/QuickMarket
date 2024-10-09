@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">QuickMarket</string>
+    <string name="menu">menu</string>
+    <string name="settings">menu</string>
+    <string name="carrito">menu</string>
+    <string name="quick_market">menu</string>
+    <string name="search">menu</string>
+    <string name="buscar_productos">menu</string>
+    <string name="algebra_de_baldor_2020">menu</string>
+    <string name="estrella">menu</string>
+    <string name="imagen_del_producto">menu</string>
+    <string name="Q_200_00">menu</string>
+    <string name="producto_agregado_al_carrito">menu</string>
+    <string name="deshacer">menu</string>
+    <string name="agregar_al_carrito">menu</string>
+    <string name="estado_usado">menu</string>
+    <string name="descripción_del_producto">menu</string>
+    <string name="Editorial_Patria">menu</string>
+    <string name="Año_2020">menu</string>
+    <string name="Páginas_584">menu</string>
+    <string name="Encuadernación_Tapa_dura">menu</string>
+    <string name="Idioma_Español">menu</string>
+    <string name="_5">menu</string>
 </resources>

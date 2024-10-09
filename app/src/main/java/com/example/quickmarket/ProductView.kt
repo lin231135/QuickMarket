@@ -1,7 +1,7 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
 package com.example.quickmarket
-
+import androidx.compose.ui.res.stringResource
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -53,12 +53,14 @@ fun ProductDetailScreen(productId: String?) {
                 title = {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 5.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 5.dp)
                     ) {
                         IconButton(onClick = { /* Handle menu click */ }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.menu),
-                                contentDescription = "Menu",
+                                contentDescription = stringResource(R.string.menu),
                                 tint = Color(0xFF83c88d)
                             )
                         }
@@ -70,12 +72,12 @@ fun ProductDetailScreen(productId: String?) {
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.carrito),
-                                contentDescription = "Logo",
+                                contentDescription = stringResource(R.string.carrito),
                                 modifier = Modifier.size(40.dp)
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                "Quick Market",
+                                text = stringResource(R.string.quick_market),
                                 fontSize = 22.sp,
                                 style = TextStyle(
                                     color = Color(0xFF008d36),
@@ -89,7 +91,7 @@ fun ProductDetailScreen(productId: String?) {
                         IconButton(onClick = { /* Handle settings click */ }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.settings),
-                                contentDescription = "Settings",
+                                contentDescription = stringResource(R.string.settings),
                                 tint = Color(0xFF83c88d)
                             )
                         }
@@ -137,7 +139,7 @@ fun SearchBar(searchText: String, onSearchTextChanged: (String) -> Unit) {
     ) {
         Icon(
             painter = painterResource(id = R.drawable.search),
-            contentDescription = "Search",
+            contentDescription = stringResource(R.string.search),
             tint = Color(0xFF008d36),
             modifier = Modifier.size(24.dp)
         )
@@ -151,7 +153,7 @@ fun SearchBar(searchText: String, onSearchTextChanged: (String) -> Unit) {
             decorationBox = { innerTextField ->
                 if (searchText.isEmpty()) {
                     Text(
-                        text = "Buscar productos...",
+                        text = stringResource(R.string.buscar_productos),
                         style = TextStyle(color = Color(0xFF008d36), fontSize = 16.sp)
                     )
                 }
@@ -167,7 +169,7 @@ fun ProductTitleAndRating() {
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = "Álgebra de Baldor (2020)",
+            text = stringResource(R.string.algebra_de_baldor_2020),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
@@ -175,12 +177,12 @@ fun ProductTitleAndRating() {
             repeat(5) {
                 Icon(
                     painter = painterResource(id = R.drawable.star),
-                    contentDescription = "Estrella",
+                    contentDescription = stringResource(R.string.estrella),
                     modifier = Modifier.size(16.dp),
                     tint = Color(0xFF008243)
                 )
             }
-            Text(text = "(5)", fontSize = 14.sp, color = Color(0xFF008243), modifier = Modifier.padding(start = 4.dp))
+            Text(text = stringResource(R.string._5), fontSize = 14.sp, color = Color(0xFF008243), modifier = Modifier.padding(start = 4.dp))
         }
     }
 }
@@ -189,7 +191,7 @@ fun ProductTitleAndRating() {
 fun ProductImage() {
     Image(
         painter = painterResource(id = R.drawable.baldor),
-        contentDescription = "Imagen del producto",
+        contentDescription = stringResource(R.string.imagen_del_producto),
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
@@ -207,7 +209,7 @@ fun ProductPriceAndButton(snackbarHostState: SnackbarHostState, coroutineScope: 
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Q200.00",
+            text = stringResource(R.string.Q_200_00),
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Black
@@ -227,11 +229,11 @@ fun ProductPriceAndButton(snackbarHostState: SnackbarHostState, coroutineScope: 
             },
             colors = ButtonDefaults.buttonColors(Color(0xFF4CAF50))
         ) {
-            Text(text = "Agregar al carrito")
+            Text(text = stringResource(R.string.agregar_al_carrito))
         }
     }
     Text(
-        text = "Estado: Usado",
+        text = stringResource(R.string.estado_usado),
         fontSize = 14.sp,
         modifier = Modifier.padding(top = 4.dp)
     )
@@ -247,7 +249,7 @@ fun ProductDetails() {
     ) {
         Column {
             Text(
-                text = "Descripción del producto",
+                text = stringResource(R.string.descripción_del_producto),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF4CAF50)
@@ -259,14 +261,13 @@ fun ProductDetails() {
             )
         }
         Text(
-            text = """
-                Autor: Aurelio Baldor
-                Editorial: PATRIA
-                Año: 2020
-                Páginas: 584
-                Encuadernación: Tapa dura
-                Idioma: Español
-            """.trimIndent(),
+            text =
+              stringResource(R.string.Editorial_Patria),
+                stringResource(R.string.Año_2020),
+            stringResource(R.string.Páginas_584),
+            stringResource(R.string.Encuadernación_Tapa_dura),
+            stringResource(R.string.Idioma_Español)
+            .trimIndent(),
             fontSize = 14.sp,
         )
     }
