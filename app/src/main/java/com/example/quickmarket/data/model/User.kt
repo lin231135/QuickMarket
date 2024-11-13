@@ -1,4 +1,7 @@
 package com.example.quickmarket.data.model
 
-class User {
-}
+data class User(
+    val email: String,
+    val username: String,
+    val password: String
+)
