@@ -220,7 +220,7 @@ fun ProductCard(product: Product, onProductClick: (Product) -> Unit) {
             painter = rememberImagePainter(
                 data = product.imageUrl, // URL de la imagen del producto
                 builder = {
-                    crossfade(true) // Añadir transición suave
+                    crossfade(true) // Añadir transición
                     placeholder(R.drawable.logo) // Imagen de reserva
                     error(R.drawable.logo) // Imagen en caso de error
                 }

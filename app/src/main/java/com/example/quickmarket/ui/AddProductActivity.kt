@@ -14,7 +14,7 @@ class AddProductActivity : ComponentActivity() {
         // Obtener el userId desde el Intent o Firebase Authentication
         val userId = intent.getStringExtra("userId") ?: FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
-        // Verificar si el userId es válido antes de iniciar la pantalla
+        // Verifica si el userId es válido antes de iniciar la pantalla
         if (userId.isBlank()) {
             throw IllegalArgumentException("El userId no puede estar vacío. Asegúrate de que el usuario esté autenticado.")
         }

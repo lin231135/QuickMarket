@@ -44,4 +44,3 @@ fun QuickMarketTheme(
         content = content
     )
 }
-

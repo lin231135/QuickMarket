@@ -22,7 +22,7 @@ class AddProductViewModel : ViewModel() {
             }
 
             try {
-                val updatedProduct = product.copy() // No se procesa imageUrl porque ya es una URL
+                val updatedProduct = product.copy()
                 _addProductResult.value = productRepository.addProductWithUser(userId, updatedProduct)
             } catch (e: Exception) {
                 _addProductResult.value = Result.failure(e)

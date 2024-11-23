@@ -45,6 +45,6 @@ class HomeActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        homeViewModel.fetchProducts() // Recargamos los productos al volver al Home
+        homeViewModel.fetchProducts() // Recargar los productos al volver al Home
     }
 }

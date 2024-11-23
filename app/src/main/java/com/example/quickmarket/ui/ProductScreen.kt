@@ -27,7 +27,7 @@ fun ProductScreen(product: Product) {
             fontWeight = FontWeight.Bold
         )
         Image(
-            painter = painterResource(id = R.drawable.baldor), // Asegúrate de tener un recurso con este ID
+            painter = painterResource(id = R.drawable.baldor),
             contentDescription = product.name,
             modifier = Modifier
                 .fillMaxWidth()

@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainLayout(
-    topBarTitle: String, // Título dinámico del TopBar
+    topBarTitle: String, // Título del TopBar
     drawerItems: List<String>, // Elementos del Drawer
     onDrawerItemClick: (String) -> Unit, // Acción al seleccionar un ítem del Drawer
     content: @Composable () -> Unit // Vista que se renderizará en el BodyContent

@@ -115,4 +115,22 @@ class ProductRepository {
             emptyList()
         }
     }
+
+    suspend fun getPurchasedProducts(userId: String): List<Product> {
+        return try {
+            // Obtén los IDs de los productos comprados
+            val userDocument = firestore.collection("users").document(userId).get().await()
+            val purchasedProductIds = userDocument["purchasedProducts"] as? List<String> ?: emptyList()
+
+            // Obtén los detalles de cada producto por su ID
+            val products = purchasedProductIds.mapNotNull { productId ->
+                val productSnapshot = productCollection.document(productId).get().await()
+                productSnapshot.toObject(Product::class.java)?.apply { id = productSnapshot.id }
+            }
+            products
+        } catch (e: Exception) {
+            Log.e("ProductRepository", "Error al obtener productos comprados: ${e.message}", e)
+            emptyList()
+        }
+    }
 }

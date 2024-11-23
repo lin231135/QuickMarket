@@ -8,32 +8,26 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class CartViewModel(
-    private val repository: ProductRepository
-) : ViewModel() {
+class CartViewModel(private val repository: ProductRepository) : ViewModel() {
 
     private val _cartProducts = MutableStateFlow<List<Product>>(emptyList())
     val cartProducts: StateFlow<List<Product>> get() = _cartProducts
 
     private val _loadingState = MutableStateFlow(false)
-    val loadingState: StateFlow<Boolean> = _loadingState
+    val loadingState: StateFlow<Boolean> get() = _loadingState
 
     private val _errorState = MutableStateFlow<String?>(null)
-    val errorState: StateFlow<String?> = _errorState
+    val errorState: StateFlow<String?> get() = _errorState
 
-    /**
-     * Cargar productos del carrito de un usuario.
-     */
     fun loadCartProducts(userId: String) {
         viewModelScope.launch {
             _loadingState.value = true
             _errorState.value = null
-
             try {
-                val products = repository.getCartProducts(userId)
+                val products = repository.getPurchasedProducts(userId)
                 _cartProducts.value = products
             } catch (e: Exception) {
-                _errorState.value = e.message
+                _errorState.value = "Error al cargar el carrito: ${e.message}"
             } finally {
                 _loadingState.value = false
             }
