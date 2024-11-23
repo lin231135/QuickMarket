@@ -19,8 +19,8 @@ import com.example.quickmarket.R
 @Composable
 fun ReusableTopBar(
     title: String,
-    onMenuClick: () -> Unit = {},
-    onSettingsClick: () -> Unit = {}
+    onMenuClick: () -> Unit = {}, // Acción para el botón de menú (ir al carrito)
+    onSettingsClick: () -> Unit = {} // Acción para el botón de ajustes
 ) {
     TopAppBar(
         title = {

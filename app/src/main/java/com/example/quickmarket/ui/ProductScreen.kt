@@ -43,5 +43,6 @@ fun ProductScreen(product: Product) {
         Text(
             text = "Detalles del producto: información adicional sobre este producto.",
             style = MaterialTheme.typography.bodyMedium
-            }
+        )
+    }
 }

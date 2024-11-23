@@ -5,24 +5,23 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import com.example.quickmarket.view.RegisterScreen
-import com.example.quickmarket.viewmodel.RegisterViewModel
+import com.example.quickmarket.viewmodel.LoginViewModel
 
-class RegisterActivity : ComponentActivity() {
-    private val registerViewModel: RegisterViewModel by viewModels()
+class LoginActivity : ComponentActivity() {
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            RegisterScreen(
-                onLoginClick = {
-                    startActivity(Intent(this, LoginActivity::class.java))
+            LoginScreen(
+                onRegisterClick = {
+                    startActivity(Intent(this, RegisterActivity::class.java))
                 },
-                onRegisterComplete = {
+                onContinueWithEmailClick = {
                     startActivity(Intent(this, HomeActivity::class.java))
                     finish()
                 },
-                registerViewModel = registerViewModel
+                loginViewModel = loginViewModel
             )
         }
     }

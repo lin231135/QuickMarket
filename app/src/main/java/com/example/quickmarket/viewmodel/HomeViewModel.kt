@@ -10,21 +10,17 @@ import kotlinx.coroutines.launch
 class HomeViewModel : ViewModel() {
     private val productRepository = ProductRepository()
 
-    // Lista completa de productos
     private val _products = MutableStateFlow<List<Product>>(emptyList())
     val products: StateFlow<List<Product>> get() = _products
 
-    // Texto de búsqueda
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> get() = _searchQuery
 
-    // Productos filtrados en base al texto de búsqueda
     val filteredProducts: StateFlow<List<Product>> = _searchQuery
         .combine(_products) { query, products ->
             if (query.isEmpty()) products
             else products.filter {
-                it.name.contains(query, ignoreCase = true) || // Busca en el nombre
-                        it.description.contains(query, ignoreCase = true) // Busca en la descripción
+                it.name.contains(query, ignoreCase = true) || it.description.contains(query, ignoreCase = true)
             }
         }
         .stateIn(
@@ -37,15 +33,17 @@ class HomeViewModel : ViewModel() {
         fetchProducts()
     }
 
-    // Método público para recargar productos
     fun fetchProducts() {
         viewModelScope.launch {
-            val fetchedProducts = productRepository.getProducts()
-            _products.value = fetchedProducts
+            try {
+                val fetchedProducts = productRepository.getProducts()
+                _products.value = fetchedProducts
+            } catch (e: Exception) {
+                // Manejar el error (opcional)
+            }
         }
     }
 
-    // Actualizar el texto de búsqueda
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
     }

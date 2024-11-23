@@ -27,9 +27,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import com.example.quickmarket.R
 import com.example.quickmarket.data.model.Product
 import com.example.quickmarket.viewmodel.HomeViewModel
+import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
@@ -37,6 +39,7 @@ import com.example.quickmarket.viewmodel.HomeViewModel
 fun HomeScreen(
     onAddProductClick: () -> Unit,
     onProductClick: (Product) -> Unit,
+    onMenuClick: () -> Unit,
     onSettingsClick: () -> Unit,
     homeViewModel: HomeViewModel
 ) {
@@ -49,7 +52,7 @@ fun HomeScreen(
             Column {
                 ReusableTopBar(
                     title = "Quick Market",
-                    onMenuClick = { /* Lógica del menú */ },
+                    onMenuClick = onMenuClick,
                     onSettingsClick = onSettingsClick
                 )
                 SearchBar(
@@ -80,6 +83,7 @@ fun HomeScreen(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            item { CarouselSection() }
             items(filteredProducts.chunked(2)) { rowProducts ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -153,6 +157,53 @@ fun SearchBar(
 }
 
 @Composable
+fun CarouselSection() {
+    val images = listOf(
+        R.drawable.add1,
+        R.drawable.add2,
+        R.drawable.add3
+    )
+    var currentIndex by remember { mutableStateOf(0) }
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(3000)
+            currentIndex = (currentIndex + 1) % images.size
+        }
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(180.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .background(Color.White),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Image(
+            painter = painterResource(id = images[currentIndex]),
+            contentDescription = "Carousel Image",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+        Spacer(modifier = Modifier.height(9.dp))
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            repeat(images.size) { index ->
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(if (index == currentIndex) Color(0xFF83c88d) else Color.Gray)
+                        .padding(8.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
 fun ProductCard(product: Product, onProductClick: (Product) -> Unit) {
     Column(
         modifier = Modifier
@@ -164,13 +215,26 @@ fun ProductCard(product: Product, onProductClick: (Product) -> Unit) {
             .padding(2.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Cargar la imagen desde la URL usando Coil
         Image(
-            painter = painterResource(id = R.drawable.logo), // Placeholder
+            painter = rememberImagePainter(
+                data = product.imageUrl, // URL de la imagen del producto
+                builder = {
+                    crossfade(true) // Añadir transición suave
+                    placeholder(R.drawable.logo) // Imagen de reserva
+                    error(R.drawable.logo) // Imagen en caso de error
+                }
+            ),
             contentDescription = product.name,
             modifier = Modifier.size(100.dp),
             contentScale = ContentScale.Crop
         )
-        Text(text = product.name, fontSize = 16.sp, modifier = Modifier.padding(top = 8.dp))
+        Text(
+            text = product.name,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 8.dp)
+        )
         Text(text = "Q${product.price}", color = Color.Gray, fontSize = 14.sp)
     }
 }

@@ -1,26 +1,19 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.example.quickmarket.ui
 
+import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,18 +21,22 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.quickmarket.viewmodel.ProductDetailViewModel
 import com.example.quickmarket.viewmodel.ProductDetailViewModelFactory
 import com.example.quickmarket.data.repository.ProductRepository
-import com.example.quickmarket.R
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.URL
 
 @Composable
 fun ProductDetailScreen(
     productId: String,
+    userId: String,
+    onMenuClick: () -> Unit,
     viewModel: ProductDetailViewModel = viewModel(factory = ProductDetailViewModelFactory(ProductRepository()))
 ) {
     val product = viewModel.productDetail.collectAsState().value
     val isLoading = viewModel.loadingState.collectAsState().value
     val error = viewModel.errorState.collectAsState().value
+    val cartState = viewModel.cartState.collectAsState().value
 
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -48,17 +45,26 @@ fun ProductDetailScreen(
         viewModel.loadProductDetails(productId)
     }
 
+    LaunchedEffect(cartState) {
+        cartState?.let { result ->
+            if (result.isSuccess) {
+                snackbarHostState.showSnackbar("Producto agregado al carrito.")
+                viewModel.resetCartState()
+            } else {
+                snackbarHostState.showSnackbar("Error al agregar al carrito: ${result.exceptionOrNull()?.message}")
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             ReusableTopBar(
-                title = "Quick Market",
-                onMenuClick = { /* Acción de ajustes */ },
+                title = "Detalles del Producto",
+                onMenuClick = onMenuClick,
                 onSettingsClick = { /* Acción de ajustes */ }
             )
         },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { padding ->
         when {
             isLoading -> {
@@ -68,7 +74,7 @@ fun ProductDetailScreen(
             }
             error != null -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = error, color = Color.Red)
+                    Text(text = error, color = MaterialTheme.colorScheme.error)
                 }
             }
             product != null -> {
@@ -81,7 +87,9 @@ fun ProductDetailScreen(
                 ) {
                     ProductTitleAndRating(product.name)
                     ProductImage(imageUrl = product.imageUrl)
-                    ProductPriceAndButton(product.price, snackbarHostState, coroutineScope)
+                    ProductPriceAndButton(product.price) {
+                        viewModel.addToCart(userId, productId)
+                    }
                     ProductDetails(description = product.description)
                 }
             }
@@ -91,45 +99,63 @@ fun ProductDetailScreen(
 
 @Composable
 fun ProductTitleAndRating(name: String) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(4.dp)
-    ) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Text(
             text = name,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            repeat(5) {
-                Icon(
-                    painter = painterResource(id = R.drawable.star),
-                    contentDescription = "Estrella",
-                    modifier = Modifier.size(16.dp),
-                    tint = Color(0xFF008243)
-                )
-            }
-            Text(text = "(5)", fontSize = 14.sp, color = Color(0xFF008243), modifier = Modifier.padding(start = 4.dp))
-        }
     }
 }
 
 @Composable
 fun ProductImage(imageUrl: String) {
-    // Aquí puedes usar Coil o Glide si imageUrl es un enlace
-    Image(
-        painter = painterResource(id = R.drawable.baldor), // Usa un placeholder si es necesario
-        contentDescription = "Imagen del producto",
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .clip(RoundedCornerShape(8.dp))
-            .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
-        contentScale = ContentScale.Crop
-    )
+    var imageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
+
+    LaunchedEffect(imageUrl) {
+        imageBitmap = loadImageFromUrl(imageUrl)
+    }
+
+    if (imageBitmap != null) {
+        Image(
+            bitmap = imageBitmap!!,
+            contentDescription = "Imagen del producto",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
+            contentScale = ContentScale.Crop
+        )
+    } else {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = "Cargando imagen...", color = Color.Gray)
+        }
+    }
+}
+
+suspend fun loadImageFromUrl(imageUrl: String): ImageBitmap? {
+    return withContext(Dispatchers.IO) {
+        try {
+            val url = URL(imageUrl)
+            val bitmap = BitmapFactory.decodeStream(url.openStream())
+            bitmap?.asImageBitmap()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 }
 
 @Composable
-fun ProductPriceAndButton(price: String, snackbarHostState: SnackbarHostState, coroutineScope: CoroutineScope) {
+fun ProductPriceAndButton(price: String, onAddToCartClick: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -142,27 +168,15 @@ fun ProductPriceAndButton(price: String, snackbarHostState: SnackbarHostState, c
             color = Color.Black
         )
         Button(
-            onClick = {
-                coroutineScope.launch {
-                    val result = snackbarHostState.showSnackbar(
-                        message = "Producto agregado al carrito",
-                        actionLabel = "Deshacer"
-                    )
-                    if (result == SnackbarResult.ActionPerformed) {
-                        // El usuario hizo clic en "Deshacer"
-                    }
-                }
-            },
-            colors = ButtonDefaults.buttonColors(Color(0xFF4CAF50))
+            onClick = onAddToCartClick,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF4CAF50), // Color principal
+                contentColor = Color.White // Color del texto dentro del botón
+            )
         ) {
-            Text(text = "Agregar al carrito")
+            Text("Agregar al carrito")
         }
     }
-    Text(
-        text = "Estado: Usado",
-        fontSize = 14.sp,
-        modifier = Modifier.padding(top = 4.dp)
-    )
 }
 
 @Composable

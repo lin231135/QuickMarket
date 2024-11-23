@@ -97,11 +97,11 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Image(
-                painter = painterResource(id = com.example.quickmarket.R.drawable.icono_correo),
+                painter = painterResource(id = com.example.quickmarket.R.drawable.email),
                 contentDescription = null,
-                modifier = Modifier.size(40.dp)
+                modifier = Modifier.size(20.dp)
             )
-            Text(text = "Continuar con correo institucional", color = Color.White)
+            Text(text = "    Continuar con correo institucional", color = Color.White)
         }
         Spacer(modifier = Modifier.height(16.dp))
 

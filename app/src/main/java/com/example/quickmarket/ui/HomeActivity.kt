@@ -32,8 +32,12 @@ class HomeActivity : ComponentActivity() {
                         }
                         startActivity(intent)
                     },
+                    onMenuClick = {
+                        // Acción para redirigir al carrito
+                        startActivity(Intent(this, CartActivity::class.java))
+                    },
                     onSettingsClick = { /* Acción para configuración */ },
-                    homeViewModel = homeViewModel // Pasamos el ViewModel
+                    homeViewModel = homeViewModel
                 )
             }
         }
